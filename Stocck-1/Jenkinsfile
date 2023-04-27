@@ -3,30 +3,30 @@ pipeline {
 	stages {
 		stage('Clean stage') {
 			steps {
-				dir("StocckApp") {
+				dir("Stocck-1") {
 					bat 'mvn clean'
 				}
 			}
 		}
 		stage('Compile stage') {
 			steps {
-				dir("StocckApp") {
+				dir("Stocck-1") {
 					bat 'mvn compile'
 				}
 			}
 		}
 		stage('Install stage') {
 			steps {
-				dir("StocckApp") {
+				dir("Stocck-1") {
 					bat 'mvn install'
 				}
 			}
 		}
 		stage('Deploy stage') {
 			steps {
-				dir("StocckApp/target") {
+				dir("Stocck-1/target") {
 					withEnv(['JENKINS_NODE_COOKIE=DontKillMe']) {
-						bat 'start java -Dserver.port=3000 -jar StocckApp-0.0.1-SNAPSHOT.jar'
+						bat 'start java -Dserver.port=3000 -jar Stocck-1-0.0.1-SNAPSHOT.jar'
 					}
 				}
 			}
