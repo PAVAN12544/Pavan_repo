@@ -10,4 +10,4 @@ spring:
          hibernate:
             dialect: org.hibernate.dialect.MySQL8Dialect
 server:
-  port: 7777
+  port: 6666
