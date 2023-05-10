@@ -1,56 +1,45 @@
 pipeline {
 	agent any
 	stages {
-		stage('Clean stage') {
-			steps {
-				dir("Stocck-1") {
-					bat 'mvn clean'
-				}
-			}
-		}
-		stage('Compile stage') {
-			steps {
-				dir("Stocck-1") {
-					bat 'mvn compile'
-				}
-			}
-		}
 		stage('Install stage') {
 			steps {
 				dir("Stocck-1") {
-					bat 'mvn install'
+					bat 'mvn clean install'
 				}
 			}
 		}
 		stage('Stop Docker Container') {
-            steps {
-                script {
-                        try {
-                                bat 'docker stop stockapp_container'
-                            } catch (err) {
-                                echo "No running container found, continuing to next stage."
-                            }
-                        }
-                }
-        }
-        stage('Delete Docker Image') {
-            steps {
-                script {
-                        try {
-                                bat 'docker rmi pavandande/stock-app'
-                            } catch (err) {
-                                echo "No existing image found, continuing to next stage."
-                            }
-                }
-            }
-        }
-        stage('Docker') {
-            steps {
-                dir("Stocck-1") {
-                    bat 'docker build -t pavandande/stock-app .'    
-                    bat 'docker run -d -p 9000:8888 --name stockapp_container pavandande/stock-app'
-                }
-            }
-        }
+			steps {
+				script {
+						try {
+								bat 'docker stop stockapp_container'
+							} catch (err) {
+								echo "No running container found, continuing to next stage."
+							}
+						}
+				}
+		}
+
+		stage('Delete Docker Image') {
+			steps {
+				script {
+						try {
+								bat 'docker rmi pavandande/stock-app'
+							} catch (err) {
+								echo "No existing image found, continuing to next stage."
+							}
+				}
+			}
+		}
+		stage('Docker') {
+			steps {
+				dir("Stocck-1") {
+					bat 'docker build -t pavandande/stock-app .'	
+					bat 'docker run -d -p 9000:8888 --name stockapp_container pavandande/stock-app'
+				}
+			}
+		}
+
+		
 	}
 }
