@@ -33,9 +33,6 @@ pipeline {
                         }
                 }
         }
-
- 
-
         stage('Delete Docker Image') {
             steps {
                 script {
@@ -55,7 +52,5 @@ pipeline {
                 }
             }
         }
-			
-		
 	}
 }
