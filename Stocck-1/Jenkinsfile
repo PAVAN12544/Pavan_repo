@@ -9,17 +9,17 @@ pipeline {
 			}
 		}
 		stage('Stop Docker Container') {
-            steps {
-                script {
-                        try {
-                                bat 'docker stop stockapp_container'
-                                bat 'docker rm stockapp_container'
-                            } catch (err) {
-                                echo "No running container found, continuing to next stage."
-                            }
-                        }
-                }
-        }
+			steps {
+				script {
+						try {
+								bat 'docker stop stock-app_container'
+								bat 'docker rm stock-app_container'
+							} catch (err) {
+								echo "No running container found, continuing to next stage."
+							}
+						}
+				}
+		}
 
 		stage('Delete Docker Image') {
 			steps {
@@ -36,7 +36,7 @@ pipeline {
 			steps {
 				dir("Stocck-1") {
 					bat 'docker build -t pavandande/stock-app .'	
-					bat 'docker run -d -p 9000:8888 --name stockapp_container pavandande/stock-app'
+					bat 'docker run -d -p 9000: --name stockapp_container pavandande/stock-app'
 				}
 			}
 		}
